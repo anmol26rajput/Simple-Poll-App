@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3 style="margin-bottom: 20px"><strong>Results</strong></h3>
+
+<h4>{{ question.question }}</h4>
+
+<ul class="list-group">
+    {% for option in options %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ option.option }}
+        <span class="badge bg-primary rounded-pill">{{ option.vote }}</span>
+    </li>
+    {% endfor %}
+</ul>
+
+<h5 style="margin-top: 20px;"><strong>Your Selection:</strong></h5>
+{% if user_answer %}
+    <p>You selected: <strong>{{ user_answer.selected_choice.option }}</strong></p>
+{% else %}
+    <p>You have not voted for this question.</p>
+{% endif %}
+
+<h5 style="margin-top: 20px;"><strong>Total Votes:</strong> {{ total_votes }}</h5>
+
+<h5 style="margin-top: 20px;"><strong>Vote Percentages:</strong></h5>
+<ul class="list-group">
+    {% for option in options %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ option.option }}
+        <span class="badge bg-success rounded-pill">
+            {% if total_votes > 0 %}
+                {{ option.vote|floatformat:1 }}% ({{ option.vote }} votes)
+            {% else %}
+                0%
+            {% endif %}
+        </span>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
