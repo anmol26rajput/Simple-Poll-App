@@ -7,7 +7,6 @@ def index(request):
     return render(request, 'index.html', {'questions': questions})
 
 
-@login_required
 def vote(request, pk):
     question = get_object_or_404(Question, id=pk)
     options = question.choices.all()
@@ -20,7 +19,7 @@ def vote(request, pk):
             question=question,
             defaults={'selected_choice': selected_choice}
         )
-        return redirect('final_result')  
+        return redirect('result')  
 
     return render(request, 'vote.html', {'question': question, 'options': options})
 
